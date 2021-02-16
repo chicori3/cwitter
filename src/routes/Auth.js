@@ -1,8 +1,10 @@
+import { authService } from "myBase";
 import React, { useState } from "react";
 
 const Auth = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [newAccount, setNewAccount] = useState(true);
   const onChange = (event) => {
     const {
       target: { name, value },
@@ -13,8 +15,19 @@ const Auth = () => {
       setPassword(value);
     }
   };
-  const onSubmit = (event) => {
+  const onSubmit = async (event) => {
     event.preventDefault();
+    try {
+      if (newAccount) {
+        // create account
+        await authService.createUserWithEmailAndPassword(email, password);
+      } else {
+        // login
+        await authService.signInWithEmailAndPassword(email, password);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <div>
@@ -35,7 +48,7 @@ const Auth = () => {
           value={password}
           onChange={onChange}
         />
-        <input type="submit" value="Login" />
+        <input type="submit" value={newAccount ? "Join" : "Login"} />
       </form>
       <div>
         <button>Continue with Google</button>
