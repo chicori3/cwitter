@@ -1,5 +1,6 @@
 import firebase from "firebase/app";
 import "firebase/auth";
+import "firebase/database";
 
 const firebaseConfig = {
   // React 환경변수 : REACT_APP_~~
