@@ -1,10 +1,16 @@
 import React, { useState } from "react";
+import { dbService } from "myBase";
 
 const Home = () => {
   const [cweet, setCweet] = useState("");
 
-  const onSubmit = (event) => {
+  const onSubmit = async (event) => {
     event.preventDefault();
+    await dbService.collection("cweets").add({
+      cweet,
+      createdAt: Date.now(),
+    });
+    setCweet("");
   };
 
   const onChange = (event) => {
@@ -17,7 +23,7 @@ const Home = () => {
 
   return (
     <div>
-      <form>
+      <form onSubmit={onSubmit}>
         <input
           value={cweet}
           onChange={onChange}
