@@ -1,8 +1,26 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { dbService } from "myBase";
 
 const Home = () => {
   const [cweet, setCweet] = useState("");
+  const [cweets, setCweets] = useState([]);
+
+  const getCweets = async () => {
+    // firestore.get()
+    const dbCweets = await dbService.collection("cweets").get();
+
+    dbCweets.forEach((document) => {
+      const cweetObj = {
+        ...document.data(),
+        id: document.id,
+      };
+      setCweets((prev) => [cweetObj, ...prev]);
+    });
+  };
+
+  useEffect(() => {
+    getCweets();
+  }, []);
 
   const onSubmit = async (event) => {
     event.preventDefault();
@@ -33,6 +51,13 @@ const Home = () => {
         />
         <input type="submit" value="Cweet" />
       </form>
+      <div>
+        {cweets.map((cweet) => (
+          <div key={cweet.id}>
+            <h4>{cweet.cweet}</h4>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
