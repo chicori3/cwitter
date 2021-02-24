@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { dbService } from "myBase";
+import Cweet from "components/Cweet";
 
 const Home = ({ userObj }) => {
   const [cweet, setCweet] = useState("");
@@ -50,9 +51,11 @@ const Home = ({ userObj }) => {
       </form>
       <div>
         {cweets.map((cweet) => (
-          <div key={cweet.id}>
-            <h4>{cweet.text}</h4>
-          </div>
+          <Cweet
+            key={cweet.id}
+            cweetObj={cweet}
+            isOwner={cweet.creatorId === userObj.id}
+          />
         ))}
       </div>
     </div>
