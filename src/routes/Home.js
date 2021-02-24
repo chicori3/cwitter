@@ -1,32 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { dbService } from "myBase";
 
-const Home = () => {
+const Home = ({ userObj }) => {
   const [cweet, setCweet] = useState("");
   const [cweets, setCweets] = useState([]);
 
-  const getCweets = async () => {
-    // firestore.get()
-    const dbCweets = await dbService.collection("cweets").get();
-
-    dbCweets.forEach((document) => {
-      const cweetObj = {
-        ...document.data(),
-        id: document.id,
-      };
-      setCweets((prev) => [cweetObj, ...prev]);
-    });
-  };
-
   useEffect(() => {
-    getCweets();
+    dbService
+      .collection("cweets")
+      .orderBy("createdAt", "desc")
+      .onSnapshot((snapshot) => {
+        const cweetArray = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setCweets(cweetArray);
+      });
   }, []);
 
   const onSubmit = async (event) => {
     event.preventDefault();
     await dbService.collection("cweets").add({
-      cweet,
+      text: cweet,
       createdAt: Date.now(),
+      creatorId: userObj.uid,
     });
     setCweet("");
   };
@@ -54,7 +51,7 @@ const Home = () => {
       <div>
         {cweets.map((cweet) => (
           <div key={cweet.id}>
-            <h4>{cweet.cweet}</h4>
+            <h4>{cweet.text}</h4>
           </div>
         ))}
       </div>
