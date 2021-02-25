@@ -26,6 +26,7 @@ const Home = ({ userObj }) => {
       createdAt: Date.now(),
       creatorId: userObj.uid,
     });
+
     setCweet("");
   };
 
@@ -54,7 +55,7 @@ const Home = ({ userObj }) => {
           <Cweet
             key={cweet.id}
             cweetObj={cweet}
-            isOwner={cweet.creatorId === userObj.id}
+            isOwner={cweet.creatorId === userObj.uid}
           />
         ))}
       </div>
