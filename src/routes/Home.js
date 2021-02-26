@@ -38,6 +38,17 @@ const Home = ({ userObj }) => {
     setCweet(value);
   };
 
+  const onFileChange = (event) => {
+    const {
+      target: { files },
+    } = event;
+
+    const theFile = files[0];
+
+    const reader = new FileReader();
+    reader.readAsDataURL(theFile);
+  };
+
   return (
     <div>
       <form onSubmit={onSubmit}>
@@ -48,6 +59,7 @@ const Home = ({ userObj }) => {
           placeholder="뭐라도 써주실래요?"
           maxLength={120}
         />
+        <input type="file" accept="image/*" onChange={onFileChange} />
         <input type="submit" value="Cweet" />
       </form>
       <div>
