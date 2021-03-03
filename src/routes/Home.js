@@ -23,15 +23,26 @@ const Home = ({ userObj }) => {
 
   const onSubmit = async (event) => {
     event.preventDefault();
-    const fireRef = storageService.ref().child(`${userObj.uid}/${uuidv4()}`);
-    const response = await fireRef.putString(attachment, "data_url");
-    // await dbService.collection("cweets").add({
-    //   text: cweet,
-    //   createdAt: Date.now(),
-    //   creatorId: userObj.uid,
-    // });
+    let attachmentUrl = "";
 
-    // setCweet("");
+    if (attachment !== "") {
+      const attachmentRef = storageService
+        .ref()
+        .child(`${userObj.uid}/${uuidv4()}`);
+      const response = await attachmentRef.putString(attachment, "data_url");
+      attachmentUrl = await response.ref.getDownloadURL();
+    }
+
+    const cweetObj = {
+      text: cweet,
+      createdAt: Date.now(),
+      creatorId: userObj.uid,
+      attachmentUrl,
+    };
+
+    await dbService.collection("cweets").add(cweetObj);
+    setCweet("");
+    setAttachment("");
   };
 
   const onChange = (event) => {
@@ -60,7 +71,7 @@ const Home = ({ userObj }) => {
     reader.readAsDataURL(theFile);
   };
 
-  const onClearFile = () => {
+  const onClearAttachment = () => {
     setAttachment(null);
   };
 
@@ -79,7 +90,7 @@ const Home = ({ userObj }) => {
         {attachment && (
           <div>
             <img src={attachment} alt="img" width="50px" height="50px" />
-            <button onClick={onClearFile}>Clear</button>
+            <button onClick={onClearAttachment}>Clear</button>
           </div>
         )}
       </form>
