@@ -6,7 +6,7 @@ import Cweet from "components/Cweet";
 const Home = ({ userObj }) => {
   const [cweet, setCweet] = useState("");
   const [cweets, setCweets] = useState([]);
-  const [attachment, setAttachment] = useState();
+  const [attachment, setAttachment] = useState("");
 
   useEffect(() => {
     dbService

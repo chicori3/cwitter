@@ -1,16 +1,17 @@
 import React, { useState } from "react";
-import { dbService } from "myBase";
+import { dbService, storageService } from "myBase";
 
 const Cweet = ({ cweetObj, isOwner }) => {
   // edit 상태 확인
   const [editing, setEditing] = useState(false);
   const [newCweet, setNewCweet] = useState(cweetObj.text);
 
-  const onDeleteClick = () => {
+  const onDeleteClick = async () => {
     const ok = window.confirm("정말 삭제하시겠습니까?");
     if (ok) {
       // delete
-      dbService.doc(`cweets/${cweetObj.id}`).delete();
+      await dbService.doc(`cweets/${cweetObj.id}`).delete();
+      await storageService.refFromURL(cweetObj.attachmentUrl).delete();
     }
   };
 
