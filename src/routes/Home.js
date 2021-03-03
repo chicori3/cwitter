@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { dbService } from "myBase";
+import { v4 as uuidv4 } from "uuid";
+import { dbService, storageService } from "myBase";
 import Cweet from "components/Cweet";
 
 const Home = ({ userObj }) => {
@@ -22,13 +23,15 @@ const Home = ({ userObj }) => {
 
   const onSubmit = async (event) => {
     event.preventDefault();
-    await dbService.collection("cweets").add({
-      text: cweet,
-      createdAt: Date.now(),
-      creatorId: userObj.uid,
-    });
+    const fireRef = storageService.ref().child(`${userObj.uid}/${uuidv4()}`);
+    const response = await fireRef.putString(attachment, "data_url");
+    // await dbService.collection("cweets").add({
+    //   text: cweet,
+    //   createdAt: Date.now(),
+    //   creatorId: userObj.uid,
+    // });
 
-    setCweet("");
+    // setCweet("");
   };
 
   const onChange = (event) => {
