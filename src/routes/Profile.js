@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { authService, dbService } from "myBase";
+import React, { useState } from "react";
+import { authService } from "myBase";
 import { useHistory } from "react-router-dom";
 
-const Profile = ({ userObj }) => {
+const Profile = ({ refreshUser, userObj }) => {
   // 로그아웃 Hooks
   const history = useHistory();
 
@@ -28,23 +28,9 @@ const Profile = ({ userObj }) => {
       await userObj.updateProfile({
         displayName: newDisplayName,
       });
+      refreshUser();
     }
   };
-
-  // // 필터링
-  // const getMyCweets = async () => {
-  //   const cweets = await dbService
-  //     .collection("cweets")
-  //     .where("creatorId", "==", userObj.uid)
-  //     .orderBy("createdAt")
-  //     .get();
-
-  //   console.log(cweets.docs.map((doc) => doc.data()));
-  // };
-
-  // useEffect(() => {
-  //   getMyCweets();
-  // });
 
   return (
     <>
