@@ -44,7 +44,16 @@ function App() {
       ) : (
         "Loading..."
       )}
-      <footer>&copy; {new Date().getFullYear()} Cwitter</footer>
+      <footer
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "flex-end",
+          alignItems: "center",
+        }}
+      >
+        &copy; {new Date().getFullYear()} Cwitter
+      </footer>
     </>
   );
 }
