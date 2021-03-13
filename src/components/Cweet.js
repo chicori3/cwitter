@@ -9,17 +9,14 @@ const Cweet = ({ cweetObj, isOwner }) => {
   const [newCweet, setNewCweet] = useState(cweetObj.text);
 
   const onDeleteClick = async () => {
-    const ok = window.confirm("정말 삭제하시겠습니까?");
+    const ok = window.confirm("정말 삭제하시겠어요?");
     if (ok) {
-      // delete
       await dbService.doc(`cweets/${cweetObj.id}`).delete();
       await storageService.refFromURL(cweetObj.attachmentUrl).delete();
     }
   };
 
-  const toggleEditing = () => {
-    setEditing((prev) => !prev);
-  };
+  const toggleEditing = () => setEditing((prev) => !prev);
 
   const onSubmit = async (event) => {
     event.preventDefault();
@@ -61,9 +58,7 @@ const Cweet = ({ cweetObj, isOwner }) => {
       ) : (
         <>
           <h4>{cweetObj.text}</h4>
-          {cweetObj.attachmentUrl && (
-            <img src={cweetObj.attachmentUrl} alt="img" />
-          )}
+          {cweetObj.attachmentUrl && <img src={cweetObj.attachmentUrl} />}
           {isOwner && (
             <div class="cweet__actions">
               <span onClick={onDeleteClick}>

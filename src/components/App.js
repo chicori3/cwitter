@@ -4,6 +4,7 @@ import AppRouter from "components/Router";
 
 function App() {
   const [init, setInit] = useState(false);
+  // eslint-disable-next-line
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userObj, setUserObj] = useState(null);
 
@@ -11,11 +12,10 @@ function App() {
   useEffect(() => {
     authService.onAuthStateChanged((user) => {
       if (user) {
-        setIsLoggedIn(true);
         setUserObj({
           displayName: user.displayName,
           uid: user.uid,
-          updateProfile: (args) => user.updateProfile,
+          updateProfile: (args) => user.updateProfile(args),
         });
       } else {
         setUserObj(null);
@@ -44,16 +44,6 @@ function App() {
       ) : (
         "Loading..."
       )}
-      <footer
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "flex-end",
-          alignItems: "center",
-        }}
-      >
-        &copy; {new Date().getFullYear()} Cwitter
-      </footer>
     </>
   );
 }
