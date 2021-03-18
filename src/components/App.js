@@ -42,7 +42,7 @@ function App() {
           userObj={userObj}
         />
       ) : (
-        "Loading..."
+        "로딩 중..."
       )}
     </>
   );

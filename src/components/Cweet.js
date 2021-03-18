@@ -44,7 +44,7 @@ const Cweet = ({ cweetObj, isOwner }) => {
               type="text"
               value={newCweet}
               required
-              placeholder="Edit your Cweet"
+              placeholder="수정"
               onChange={onChange}
               autoFocus
               className="formInput"

@@ -74,7 +74,7 @@ const CweetFactory = ({ userObj }) => {
           value={cweet}
           onChange={onChange}
           type="text"
-          placeholder="무슨 생각하세요?"
+          placeholder="아무 말이나 해도 좋아요"
           maxLength={120}
         />
         <input type="submit" value="&rarr;" className="factoryInput__arrow" />

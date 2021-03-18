@@ -38,14 +38,14 @@ const Profile = ({ refreshUser, userObj }) => {
         <input
           onChange={onChange}
           type="text"
-          placeholder="Display Name"
+          placeholder="닉네임"
           value={newDisplayName}
           autoFocus
           className="formInput"
         />
         <input
           type="submit"
-          value="Update Profile"
+          value="적용하기"
           className="formBtn"
           style={{
             marginTop: 10,
@@ -53,7 +53,7 @@ const Profile = ({ refreshUser, userObj }) => {
         />
       </form>
       <span className="formBtn cancelBtn logOut" onClick={onLogOutClick}>
-        Log Out
+        로그아웃
       </span>
     </div>
   );
